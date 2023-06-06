@@ -15,28 +15,16 @@ type Props = {
 export default function AboutUs() {
   const photos: Array<PhotosType> = [
     {
-      name: 'Ruslan Khakimov',
+      name: 'Руслан Хакимов',
       description:
-        "Our team leader and backend developer. The user doesn't see the server part of the page, but this is what drives the site or application. Ruslan isn't only a developer and a professional in his field, but also a good manager. He helps the team and manages the development process.",
+        'Руководитель нашей команды и серверный разработчик. Пользователь не видит серверную часть страницы, но это то, что управляет сайтом или приложением. Руслан не только разработчик и профессионал своего дела, но и хороший менеджер. Он помогает команде и руководит процессом разработки.',
       image: imageRuslan.src,
     },
     {
-      name: 'Nikita Niakhai',
+      name: 'Диана Мельникова',
       description:
-        'Our frontend developer. Nikita designed the layout of the design so that it would be convenient for the user, so you, to interact with the page.',
-      image: imageNikita.src,
-    },
-    {
-      name: 'Diana Melnikova',
-      description:
-        'Our frontend developer and UI/UX designer. Diana set the design and direction for the whole project, so UI/UX experts are no less important than developers. Nevertheless, everything you see on this site is the work of our interface developers.',
+        'Наш frontend-разработчик и дизайнер пользовательского интерфейса. Диана задала дизайн и направление для всего проекта, поэтому эксперты по пользовательскому интерфейсу не менее важны, чем разработчики. Тем не менее, все, что вы видите на этом сайте, является работой наших разработчиков интерфейса.',
       image: imageDiana.src,
-    },
-    {
-      name: 'Sergey Pasynkov',
-      description:
-        'Our frontend developer and UI/UX designer. Sergey was in charge of designing the website and diligently worked on enhancing its structure for optimal functionality. He also conducted rigorous testing to ensure that everything was working seamlessly, thus playing a crucial role in the success of the website.',
-      image: imageSergey.src,
     },
   ]
 
@@ -81,14 +69,13 @@ export default function AboutUs() {
           }}
         >
           <h1 className="ms-70 sticky left-80 right-0 top-0 text-center text-3xl font-bold underline">
-            OUR CREATORS
+            НАША КОМАНДА
           </h1>
           <p className="py-5 text-center text-base font-normal">
-            We possess the capability to transform even the most eccentric idea
-            into an operational and marketable project. It is evident that
-            having a competent and skilled team accounts for 50% of the
-            project&apos;s accomplishment. We welcome you to familiarize
-            yourself with our team!
+            Мы обладаем способностью превратить даже самую эксцентричную идею в
+            действующий и востребованный на рынке проект. Очевидно, что наличие
+            компетентной и квалифицированной команды составляет 50% успеха
+            проекта. Мы приглашаем вас познакомиться с нашей командой!
           </p>
         </motion.div>
         <div className="mt-10 w-full overflow-x-auto overflow-y-hidden">
