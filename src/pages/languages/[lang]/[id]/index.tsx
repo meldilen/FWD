@@ -81,7 +81,7 @@ export default function Container() {
             </p>
           </motion.div>
           <div
-            className="m-2 h-[5vw] w-[20vw] rounded-lg bg-secondary-500 px-10 py-3 text-center align-middle text-lg text-white hover:bg-red-400"
+            className="m-4 ml-[33vw] flex h-[4vw] w-[16vw] items-center justify-center rounded-lg bg-red-400 px-5 py-8 text-white hover:bg-secondary-500"
             onClick={() => setFront(!front)}
             style={{
               marginLeft: '32vw',
@@ -144,11 +144,19 @@ export default function Container() {
               )
             }
           >
-            Изменение
+            Добавление
           </button>
-          {/* <button className={buttomStyles} onClick={handleDelete}>
-            Удалить
-          </button> */}
+          <button
+            className={buttomStyles}
+            onClick={() => {
+              flashcardsRef.child(keyToDelete).remove()
+              router.push(
+                `/languages/${router.query.lang}/${router.query.id}/modify`
+              )
+            }}
+          >
+            Удаление
+          </button>
         </motion.div>
       </section>
     </>

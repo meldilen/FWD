@@ -5,6 +5,7 @@ import {
   doc,
   setDoc,
   updateDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { auth, db } from '@/firebase/firebase-setup'
 import { useRouter } from 'next/router'
@@ -23,15 +24,7 @@ export default function Modify() {
     (router.query.lang as string).charAt(0).toUpperCase() +
       (router.query.lang as string).slice(1)
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current = false
-      if (auth.currentUser?.uid !== uid) {
-        alert('Нет доступа к модификации данной карты')
-        router.push(`/languages/${lang}`).then((r) => r)
-      }
-    }
-  }, [lang, router, uid])
+  useEffect(() => {}, [lang, router, uid])
 
   async function addCard() {
     if (english === '') {
@@ -43,10 +36,28 @@ export default function Modify() {
       return
     }
     if (uid) {
-      await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
-        english: english,
-        target: target,
-      })
+      const docRef = doc(db, `languages/${lang}/flashcards`, uid)
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap.exists()) {
+        // if document exists, update it with new array entry
+        await updateDoc(docRef, {
+          card: arrayUnion({
+            english: english,
+            target: target,
+          }),
+        })
+      } else {
+        // if document doesn't exist, create it with initial array
+        await setDoc(docRef, {
+          card: [
+            {
+              english: english,
+              target: target,
+            },
+          ],
+        })
+      }
     }
     router.push(`/languages/${lang}/${uid}`).then((r) => r)
   }
@@ -77,6 +88,9 @@ export default function Modify() {
       </Head>
       <section id="slanguages" className="mx-auto min-h-full w-5/6 py-20">
         <div>
+          <p className='className="ms-70 sticky left-80 right-0 top-0 text-center text-2xl'>
+            Добавление новой карточки
+          </p>
           <div className="m-3">
             <input
               type="text"

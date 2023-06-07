@@ -72,6 +72,9 @@ export default function Modify() {
         <title>Изменение карточки</title>
       </Head>
       <section id="slanguages" className="mx-auto min-h-full w-5/6 py-20">
+        <p className='className="ms-70 sticky left-80 right-0 top-0 text-center text-2xl'>
+          Добавление карточки
+        </p>
         <motion.div>
           <div>
             <div className="m-3">

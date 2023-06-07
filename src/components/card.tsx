@@ -3,7 +3,7 @@ import { CardProps } from '@/shared/types'
 export default function Card({ isEmpty, card, front, language }: CardProps) {
   return (
     <>
-      {isEmpty && <p>No words</p>}
+      {isEmpty && <p>Нет слов для изучения</p>}
       {front && card && <h1>English: {card.english}</h1>}
       {!front && card && (
         <h1>
