@@ -14,6 +14,9 @@ export default function Cards() {
   const router = useRouter()
   const [cards, setCards] = useState<Array<Data>>([])
 
+  const buttomStyles =
+    'ml-[33vw] m-4 h-[4vw] w-[16vw] rounded-lg bg-red-400 flex justify-center items-center px-5 py-8 text-white hover:bg-secondary-500'
+
   useEffect(() => {
     async function getCards() {
       const querySnapshot = await getDocs(
@@ -57,22 +60,39 @@ export default function Cards() {
               Выберите пользователя, чьи карточки вы хотели бы изучить:
             </p>
           </motion.div>
-          {cards.map((x) => {
-            return (
-              <div className="my-2" key={x.id}>
-                <button
-                  className="m-1 ml-[34vw] h-[3vw] w-[15vw] rounded-lg bg-red-400 px-11 py-3 text-center text-white hover:bg-secondary-500"
-                  onClick={() =>
-                    router.push(`/languages/${router.query.lang}/${x.id}`)
-                  }
-                >
-                  <Suspense fallback={<div>Загрузка...</div>}>
-                    <Show uid={x.id} />
-                  </Suspense>
-                </button>
-              </div>
-            )
-          })}
+          {cards.length > 0 ? (
+            cards.map((x) => {
+              return (
+                <div className="my-2" key={x.id}>
+                  <button
+                    className="m-1 ml-[34vw] h-[3vw] w-[15vw] rounded-lg bg-red-400 px-11 py-3 text-center text-white hover:bg-secondary-500"
+                    onClick={() =>
+                      router.push(`/languages/${router.query.lang}/${x.id}`)
+                    }
+                  >
+                    <Suspense fallback={<div>Загрузка...</div>}>
+                      <Show uid={x.id} />
+                    </Suspense>
+                  </button>
+                </div>
+              )
+            })
+          ) : (
+            <p className="text-center">
+              Пользователей, изучающих данный язык, нет:( <br></br>Стань первым
+              и войди в историю как просветитель языка!<br></br>
+              <button
+                className={buttomStyles}
+                onClick={() =>
+                  router.push(
+                    `/languages/${router.query.lang}/${router.query.id}/add`
+                  )
+                }
+              >
+                Добавить карточку
+              </button>
+            </p>
+          )}
           <div className="ml-[45vw] mt-[-14vw] flex">
             <img
               className="mx-auto w-[10vw]"

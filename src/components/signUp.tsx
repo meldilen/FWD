@@ -22,7 +22,7 @@ const SignUp = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     if (await checkUsername()) {
-      setError('Username is already in use')
+      setError('Такой ник уже используется!')
       return
     }
     const res = await signUp(email, password)
