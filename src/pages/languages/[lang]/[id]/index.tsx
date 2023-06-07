@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import Card from '@/components/card'
 import { CardType } from '@/shared/types'
 import { DocumentSnapshot } from '@firebase/firestore'
+import { FirebaseError } from 'firebase/app'
 
 export default function Container() {
   const router = useRouter()
@@ -82,7 +83,10 @@ export default function Container() {
           <div
             className="m-2 h-[5vw] w-[20vw] rounded-lg bg-secondary-500 px-10 py-3 text-center align-middle text-lg text-white hover:bg-red-400"
             onClick={() => setFront(!front)}
-            style={{ marginLeft: '32vw' }}
+            style={{
+              marginLeft: '32vw',
+              textAlign: 'center',
+            }}
           >
             <Card
               isEmpty={words.length === 0}
@@ -95,7 +99,7 @@ export default function Container() {
             <>
               <button
                 className={buttomStyles}
-                style={{ marginLeft: '20vw' }}
+                style={{ marginLeft: '17vw' }}
                 onClick={() => {
                   if (cardNum + 1 < words.length) {
                     setCardNum(cardNum + 1)
@@ -142,6 +146,9 @@ export default function Container() {
           >
             Изменение
           </button>
+          {/* <button className={buttomStyles} onClick={handleDelete}>
+            Удалить
+          </button> */}
         </motion.div>
       </section>
     </>
