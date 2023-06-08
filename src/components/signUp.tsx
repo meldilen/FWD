@@ -19,6 +19,16 @@ const SignUp = () => {
     return res.includes(username)
   }
 
+  const handleLanguageSelect = async (lang: string) => {
+    const uid = auth.currentUser?.uid
+    if (uid) {
+      await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
+        card: [],
+      })
+      router.push(`/languages/${lang}/${uid}/add`)
+    }
+  }
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     if (await checkUsername()) {
@@ -34,20 +44,46 @@ const SignUp = () => {
     } else {
       const uid = auth.currentUser?.uid
       if (uid) {
-        for (const lang of ['french', 'german', 'russian', 'spanish']) {
-          await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
-            card: [],
-          })
-        }
         await setDoc(doc(db, 'users', uid), {
           username: username,
           email: email,
           password: password,
         })
+        router.push(`/languages`)
       }
-      await router.push('/languages')
     }
   }
+
+  // const handleSubmit = async (e: { preventDefault: () => void }) => {
+  //   e.preventDefault()
+  //   if (await checkUsername()) {
+  //     setError('Такой ник уже используется!')
+  //     return
+  //   }
+  //   const res = await signUp(email, password)
+  //   if (typeof res !== 'boolean' && res?.error) {
+  //     setError(res.error.toString().slice(10))
+  //     setUsername('')
+  //     setEmail('')
+  //     setPassword('')
+  //   } else {
+  //     const uid = auth.currentUser?.uid
+  //     if (uid) {
+  //       // for (const lang of ['french', 'german', 'russian', 'spanish']) {
+  //       //   await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
+  //       //     card: [],
+  //       //   })
+  //       // }
+  //       await setDoc(doc(db, 'users', uid), {
+  //         username: username,
+  //         email: email,
+  //         password: password,
+  //       })
+  //       router.push(`/languages/${router.query.lang}/${router.query.id}/add`)
+  //     }
+  //     await router.push('/languages')
+  //   }
+  // }
 
   const inputStyles = `w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white text-white`
 

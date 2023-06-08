@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase/firebase-setup'
 import { motion } from 'framer-motion'
 import Card from '@/components/card'
@@ -54,6 +54,20 @@ export default function Container() {
     }
   }
 
+  function deleteCard(wordIndex: number) {
+    const newWords = [...words]
+    newWords.splice(wordIndex, 1)
+    const uid = router.query.id as string
+    if (uid) {
+      const docRef = doc(db, `languages/${router.query.lang}/flashcards`, uid)
+      setDoc(docRef, { card: newWords }, { merge: true }).then(() => {
+        setWords(newWords)
+        setCardNum(cardNum - 1)
+      })
+      router.push(`/languages/${router.query.lang}`)
+    }
+  }
+
   return (
     <>
       <Head>
@@ -84,7 +98,7 @@ export default function Container() {
             className="m-4 ml-[33vw] flex h-[4vw] w-[16vw] items-center justify-center rounded-lg bg-red-400 px-5 py-8 text-white hover:bg-secondary-500"
             onClick={() => setFront(!front)}
             style={{
-              marginLeft: '32vw',
+              marginLeft: '34vw',
               textAlign: 'center',
             }}
           >
@@ -137,7 +151,11 @@ export default function Container() {
             </>
           )}
           <button
-            className={buttomStyles}
+            className={
+              cardNum != 0
+                ? buttomStyles
+                : 'm-2 ml-[31vw] h-[3vw] w-[11vw] rounded-lg bg-red-400 px-10 py-3 text-center text-white hover:bg-secondary-500'
+            }
             onClick={() =>
               router.push(
                 `/languages/${router.query.lang}/${router.query.id}/modify`
@@ -146,7 +164,7 @@ export default function Container() {
           >
             Добавление
           </button>
-          <button className={buttomStyles} onClick={() => {}}>
+          <button className={buttomStyles} onClick={() => deleteCard(cardNum)}>
             Удаление
           </button>
         </motion.div>
