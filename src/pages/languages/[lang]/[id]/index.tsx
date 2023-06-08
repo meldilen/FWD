@@ -152,7 +152,7 @@ export default function Container() {
           )}
           <button
             className={
-              cardNum != 0
+              words.length !== 0
                 ? buttomStyles
                 : 'm-2 ml-[31vw] h-[3vw] w-[11vw] rounded-lg bg-red-400 px-10 py-3 text-center text-white hover:bg-secondary-500'
             }

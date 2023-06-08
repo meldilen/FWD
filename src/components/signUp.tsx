@@ -7,6 +7,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
 
@@ -17,16 +18,6 @@ const SignUp = () => {
       res.push(doc.data().username)
     })
     return res.includes(username)
-  }
-
-  const handleLanguageSelect = async (lang: string) => {
-    const uid = auth.currentUser?.uid
-    if (uid) {
-      await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
-        card: [],
-      })
-      router.push(`/languages/${lang}/${uid}/add`)
-    }
   }
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -41,49 +32,28 @@ const SignUp = () => {
       setUsername('')
       setEmail('')
       setPassword('')
+      setRole('')
     } else {
       const uid = auth.currentUser?.uid
       if (uid) {
-        await setDoc(doc(db, 'users', uid), {
-          username: username,
-          email: email,
-          password: password,
-        })
-        router.push(`/languages`)
+        await setDoc(
+          doc(db, 'users', uid),
+          {
+            username: username,
+            email: email,
+            password: password,
+            role: role ? '0' : '1',
+          },
+          { merge: true }
+        )
+        router
+          .push(`/languages`)
+          .then((lang) =>
+            router.push(`/languages/${lang}`).then(() => router.push(`/add`))
+          )
       }
     }
   }
-
-  // const handleSubmit = async (e: { preventDefault: () => void }) => {
-  //   e.preventDefault()
-  //   if (await checkUsername()) {
-  //     setError('Такой ник уже используется!')
-  //     return
-  //   }
-  //   const res = await signUp(email, password)
-  //   if (typeof res !== 'boolean' && res?.error) {
-  //     setError(res.error.toString().slice(10))
-  //     setUsername('')
-  //     setEmail('')
-  //     setPassword('')
-  //   } else {
-  //     const uid = auth.currentUser?.uid
-  //     if (uid) {
-  //       // for (const lang of ['french', 'german', 'russian', 'spanish']) {
-  //       //   await setDoc(doc(db, `languages/${lang}/flashcards`, uid), {
-  //       //     card: [],
-  //       //   })
-  //       // }
-  //       await setDoc(doc(db, 'users', uid), {
-  //         username: username,
-  //         email: email,
-  //         password: password,
-  //       })
-  //       router.push(`/languages/${router.query.lang}/${router.query.id}/add`)
-  //     }
-  //     await router.push('/languages')
-  //   }
-  // }
 
   const inputStyles = `w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white text-white`
 
@@ -113,6 +83,16 @@ const SignUp = () => {
               onChange={(e) => setEmail(e.target.value)}
               className={inputStyles}
             />
+          </div>
+          <div className="m-3">
+            <select
+              className="my-2 block w-full rounded-md border-gray-300 px-4 py-2"
+              value={role ? '0' : '1'}
+              onChange={(e) => setRole((e.target.value = '0'))}
+            >
+              <option value="0">Пользователь</option>
+              <option value="1">Администратор</option>
+            </select>
           </div>
           <div className="m-3">
             <input
