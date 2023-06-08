@@ -8,12 +8,8 @@ import imageAbstractWaves from '@/assets/AbstractWaves.png'
 export default function Languages() {
   const router = useRouter()
 
-  function handle(lang: string, flag = 0) {
-    if (flag == 1) {
-      router.push(`/languages/${lang}`).then((r) => r)
-    } else {
-      router.push(`/languages/${lang}/add`)
-    }
+  function handle(lang: string) {
+    router.push(`/languages/${lang}`).then((r) => r)
   }
 
   return (
@@ -54,25 +50,25 @@ export default function Languages() {
           </p>
         </motion.div>
         <button
-          onClick={() => handle('french', 1)}
+          onClick={() => handle('french')}
           className="m-3 ml-[29vw] rounded-lg bg-red-400 px-11 py-3 text-white hover:bg-secondary-500"
         >
           Французский
         </button>
         <button
-          onClick={() => handle('spanish', 1)}
+          onClick={() => handle('spanish')}
           className="ml-[1vw] rounded-lg bg-red-400 px-10 py-3 text-white hover:bg-secondary-500"
         >
           Испанский
         </button>
         <button
-          onClick={() => handle('german', 1)}
+          onClick={() => handle('german')}
           className="m-3 ml-[29vw] rounded-lg bg-red-400 px-[54px] py-3 text-white hover:bg-secondary-500"
         >
           Немецкий
         </button>
         <button
-          onClick={() => handle('russian', 1)}
+          onClick={() => handle('russian')}
           className="ml-[1vw] rounded-lg bg-red-400 px-[50px] py-3 text-white hover:bg-secondary-500"
         >
           Русский

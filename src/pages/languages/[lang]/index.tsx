@@ -93,6 +93,20 @@ export default function Cards() {
               </button>
             </p>
           )}
+          {cards.length > 0 && (
+            <div>
+              <button
+                className="m-1 ml-[34vw] h-[3vw] w-[15vw] rounded-lg bg-red-900 px-11 py-3 text-center text-white hover:bg-secondary-500"
+                onClick={() =>
+                  router.push(
+                    `/languages/${router.query.lang}/${router.query.id}/add`
+                  )
+                }
+              >
+                Добавить карточку
+              </button>
+            </div>
+          )}
           <div className="ml-[45vw] mt-[-14vw] flex">
             <img
               className="mx-auto w-[10vw]"
