@@ -14,7 +14,6 @@ export const db = getFirestore()
 
 export const signUp = async (email: string, password: string) => {
   try {
-    console.log(auth)
     await createUserWithEmailAndPassword(auth, email, password)
     return true
   } catch (error: any) {
