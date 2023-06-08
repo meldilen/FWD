@@ -46,11 +46,7 @@ const SignUp = () => {
           },
           { merge: true }
         )
-        router
-          .push(`/languages`)
-          .then((lang) =>
-            router.push(`/languages/${lang}`).then(() => router.push(`/add`))
-          )
+        router.push(`/languages`)
       }
     }
   }
