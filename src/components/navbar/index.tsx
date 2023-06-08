@@ -57,7 +57,6 @@ const Navbar = ({ isTopOfPage }: Props) => {
                   )}
                 </ul>
               </div>
-
               <div className={`${flexBetween} gap-8`}>
                 {auth.currentUser && <Profile />}
               </div>

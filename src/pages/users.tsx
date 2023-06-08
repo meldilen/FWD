@@ -35,7 +35,6 @@ export default function Cards() {
     const languagesSnapshot = await getDocs(languagesRef)
     languagesSnapshot.forEach(async (languageDoc) => {
       const language = languageDoc.id
-      console.log(language)
       const flashcardsRef = collection(db, `languages/${language}/flashcards`)
       const flashcardsSnapshot = await getDocs(flashcardsRef)
       flashcardsSnapshot.forEach(async (flashcardDoc) => {
