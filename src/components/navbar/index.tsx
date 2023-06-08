@@ -3,6 +3,8 @@ import React from 'react'
 import Logo from '@/assets/Logo.png'
 import Profile from '@/components/signOut'
 import { auth } from '@/firebase/firebase-setup'
+import { useEffect, useState } from 'react'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 type Props = {
   isTopOfPage: boolean
@@ -11,6 +13,22 @@ type Props = {
 const Navbar = ({ isTopOfPage }: Props) => {
   const flexBetween = 'flex items-center justify-between'
   const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow'
+  const [role, setRole] = useState<string | null>(null)
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      const userId = auth.currentUser?.uid
+      if (userId) {
+        const db = getFirestore()
+        const docRef = doc(db, 'users', userId)
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          setRole(docSnap.data().role)
+        }
+      }
+    }
+
+    fetchUserRole()
+  }, [])
   return (
     <nav className="left-16 flex h-16">
       <div
@@ -32,6 +50,11 @@ const Navbar = ({ isTopOfPage }: Props) => {
                   <li>
                     <Link href={'/about'}>О наших создателях</Link>
                   </li>
+                  {role === '1' && (
+                    <li>
+                      <Link href={'/users'}>Пользователи</Link>
+                    </li>
+                  )}
                 </ul>
               </div>
 

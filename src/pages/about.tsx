@@ -2,8 +2,6 @@ import Head from 'next/head'
 import { motion } from 'framer-motion'
 import imageRuslan from '@/assets/Ruslan.png'
 import imageDiana from '@/assets/Diana.png'
-import imageNikita from '@/assets/Nikita.png'
-import imageSergey from '@/assets/Sergey.png'
 import { PhotosType } from '@/shared/types'
 
 type Props = {
