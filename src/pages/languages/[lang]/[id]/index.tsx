@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 import Card from '@/components/card'
 import { CardType } from '@/shared/types'
 import { DocumentSnapshot } from '@firebase/firestore'
-import { FirebaseError } from 'firebase/app'
 
 export default function Container() {
   const router = useRouter()
