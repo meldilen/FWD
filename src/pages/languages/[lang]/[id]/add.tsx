@@ -65,7 +65,7 @@ export default function Modify() {
         })
       }
     }
-    router.push(`/languages/${lang}/${uid}`).then((r) => r)
+    router.push(`/languages/${lang}`)
   }
 
   async function deleteCard() {
