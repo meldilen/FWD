@@ -146,15 +146,7 @@ export default function Container() {
           >
             Добавление
           </button>
-          <button
-            className={buttomStyles}
-            onClick={() => {
-              flashcardsRef.child(keyToDelete).remove()
-              router.push(
-                `/languages/${router.query.lang}/${router.query.id}/modify`
-              )
-            }}
-          >
+          <button className={buttomStyles} onClick={() => {}}>
             Удаление
           </button>
         </motion.div>

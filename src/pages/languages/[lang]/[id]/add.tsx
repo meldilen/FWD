@@ -24,7 +24,12 @@ export default function Modify() {
     (router.query.lang as string).charAt(0).toUpperCase() +
       (router.query.lang as string).slice(1)
 
-  useEffect(() => {}, [lang, router, uid])
+  useEffect(() => {
+    if (!auth.currentUser) {
+      alert('Необходимо зарегистрироваться, чтобы добавить карточку!')
+      router.push(`/`).then((r) => r)
+    }
+  }, [lang, router, uid])
 
   async function addCard() {
     if (english === '') {
@@ -35,8 +40,9 @@ export default function Modify() {
       alert(`Empty ${language} field`)
       return
     }
+    const uid = auth.currentUser
     if (uid) {
-      const docRef = doc(db, `languages/${lang}/flashcards`, uid)
+      const docRef = doc(db, `languages/${lang}/flashcards`, uid.uid)
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
